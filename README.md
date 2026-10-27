@@ -20,8 +20,10 @@ Hệ thống quản lý nhân sự trên nền tảng đám mây. Hỗ trợ cá
 2. Frontend: `cd frontend && npm install && npm start`
 
 ## Các liên kết dự án
-- **GitHub Repository:** https://github.com/[Tên_Tài_Khoản_GitHub_Của_Bạn]/239714_TranMinhTam
-- **Docker Hub Backend:** 
-- **Docker Hub Frontend:** 
-- **Render App:** 
-- **Render API:**
+
+- **GitHub Repository**: https://github.com/konami200305-collab/239714_TranMinhTam
+- **Docker Hub Backend**: tranminhtam2005/backend
+- **Docker Hub Frontend**: tranminhtam2005/frontend
+- **MongoDB Atlas Connection String**: mongodb+srv://239714_TranMinhTam_db_user:239714Aa@cluster0.g6uef0p.mongodb.net/
+- **Render App (Frontend)**: https://web-239714.onrender.com
+- **Render API (Backend)**: https://api-239714.onrender.com
