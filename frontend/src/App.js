@@ -7,7 +7,7 @@ const API_URL = process.env.REACT_APP_API_URL || 'https://api-239714.onrender.co
 function App() {
   const [employees, setEmployees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [editingId, setEditingId] = useState(null); // Lưu ID nhân viên đang sửa
+  const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     employeeId: '',
     fullName: '',
@@ -39,16 +39,13 @@ function App() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // Hàm xử lý cả Thêm mới và Cập nhật
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       if (editingId) {
-        // Gọi API PUT để cập nhật
         await axios.put(`${API_URL}/${editingId}`, formData);
         alert('Cập nhật thông tin nhân viên thành công!');
       } else {
-        // Gọi API POST để thêm mới
         await axios.post(API_URL, formData);
         alert('Thêm nhân viên thành công!');
       }
@@ -60,7 +57,6 @@ function App() {
     }
   };
 
-  // Đổ dữ liệu nhân viên lên Form khi bấm nút "Sửa"
   const handleEdit = (emp) => {
     setEditingId(emp._id || emp.employeeId);
     setFormData({
@@ -123,33 +119,70 @@ function App() {
         />
       </div>
 
-      <form onSubmit={handleSubmit} style={{ background: '#f4f4f4', padding: '15px', borderRadius: '5px', marginBottom: '20px' }}>
-        <h3>{editingId ? 'Cập Nhật Hồ Sơ Nhân Viên' : 'Thêm Hồ Sơ Nhân Viên Mới'}</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-          <input type="text" name="employeeId" placeholder="Mã nhân viên *" value={formData.employeeId} onChange={handleChange} required disabled={!!editingId} />
-          <input type="text" name="fullName" placeholder="Họ và tên *" value={formData.fullName} onChange={handleChange} required />
-          
-          <select name="gender" value={formData.gender} onChange={handleChange}>
-            <option value="Nam">Nam</option>
-            <option value="Nữ">Nữ</option>
-            <option value="Khác">Khác</option>
-          </select>
-          
-          <input type="date" name="dateOfBirth" placeholder="Ngày sinh" value={formData.dateOfBirth} onChange={handleChange} />
-          <input type="text" name="department" placeholder="Phòng ban" value={formData.department} onChange={handleChange} />
-          <input type="text" name="position" placeholder="Chức vụ" value={formData.position} onChange={handleChange} />
-          <input type="email" name="email" placeholder="Email *" value={formData.email} onChange={handleChange} required />
-          <input type="text" name="phone" placeholder="Số điện thoại" value={formData.phone} onChange={handleChange} />
-          <input type="date" name="hireDate" placeholder="Ngày vào làm" value={formData.hireDate} onChange={handleChange} />
-          
-          <select name="status" value={formData.status} onChange={handleChange}>
-            <option value="Đang làm việc">Đang làm việc</option>
-            <option value="Đã nghỉ việc">Đã nghỉ việc</option>
-            <option value="Tạm nghỉ">Tạm nghỉ</option>
-          </select>
+      <form onSubmit={handleSubmit} style={{ background: '#f4f4f4', padding: '20px', borderRadius: '5px', marginBottom: '20px' }}>
+        <h3 style={{ marginTop: 0 }}>{editingId ? 'Cập Nhật Hồ Sơ Nhân Viên' : 'Thêm Hồ Sơ Nhân Viên Mới'}</h3>
+        
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Mã nhân viên *</label>
+            <input type="text" name="employeeId" placeholder="Mã NV" value={formData.employeeId} onChange={handleChange} required disabled={!!editingId} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Họ và tên *</label>
+            <input type="text" name="fullName" placeholder="Họ và tên" value={formData.fullName} onChange={handleChange} required style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Giới tính</label>
+            <select name="gender" value={formData.gender} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}>
+              <option value="Nam">Nam</option>
+              <option value="Nữ">Nữ</option>
+              <option value="Khác">Khác</option>
+            </select>
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Ngày sinh</label>
+            <input type="date" name="dateOfBirth" value={formData.dateOfBirth} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Phòng ban</label>
+            <input type="text" name="department" placeholder="Phòng ban" value={formData.department} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Chức vụ</label>
+            <input type="text" name="position" placeholder="Chức vụ" value={formData.position} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Email *</label>
+            <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Số điện thoại</label>
+            <input type="text" name="phone" placeholder="Số điện thoại" value={formData.phone} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Ngày vào làm</label>
+            <input type="date" name="hireDate" value={formData.hireDate} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }} />
+          </div>
+
+          <div>
+            <label style={{ fontWeight: 'bold', display: 'block', marginBottom: '5px' }}>Trạng thái làm việc</label>
+            <select name="status" value={formData.status} onChange={handleChange} style={{ width: '100%', padding: '8px', boxSizing: 'border-box' }}>
+              <option value="Đang làm việc">Đang làm việc</option>
+              <option value="Đã nghỉ việc">Đã nghỉ việc</option>
+              <option value="Tạm nghỉ">Tạm nghỉ</option>
+            </select>
+          </div>
         </div>
 
-        <div style={{ marginTop: '15px' }}>
+        <div style={{ marginTop: '20px' }}>
           <button type="submit" style={{ padding: '10px 20px', backgroundColor: editingId ? '#0d6efd' : '#28a745', color: '#fff', border: 'none', cursor: 'pointer', marginRight: '10px' }}>
             {editingId ? 'Cập Nhật' : 'Thêm Mới'}
           </button>
@@ -194,7 +227,7 @@ function App() {
                 <button onClick={() => handleEdit(emp)} style={{ backgroundColor: '#ffc107', color: '#000', border: 'none', padding: '5px 10px', cursor: 'pointer', marginRight: '5px' }}>
                   Sửa
                 </button>
-                <button onClick={() => handleDelete(emp._id || emp.employeeId)} style={{ backgroundColor: '#dc3545', color: '#fff', border: 'none', padding: '5px 10px', cursor: 'pointer' }}>
+                <button onClick={() => handleDelete(emp._id || emp.employeeId)} style={{ backgroundColor: '#dc3545', color: '#fff', border: 'none', cursor: 'pointer' }}>
                   Xóa
                 </button>
               </td>
